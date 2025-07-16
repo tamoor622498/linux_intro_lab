@@ -6,5 +6,5 @@ vivado -nolog -nojournal -mode batch -source ./tcl/impl.tcl
 bootgen -image doug.bif -arch zynq -process_bitstream bin -w on
 
 # the next line makes the vitis workspace and builds the app thru boot.bin stage
-# commenting out the Vitis section, since we will test this periph in Linux!
+# commenting out the Vitis section, since we will test this in Linux!
 #xsct ./tcl/make_sw.tcl
