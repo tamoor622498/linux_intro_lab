@@ -43,12 +43,14 @@ entity design_1_wrapper is
     mclk : out STD_LOGIC;
     sdata : out STD_LOGIC;
     sw : in std_logic_vector(3 downto 0); 
-    leds : out std_logic_vector(3 downto 0)
+    leds : out std_logic_vector(3 downto 0);
+    rgbLED0 : out std_logic_vector(2 downto 0);
+    rgbLED1 : out std_logic_vector(2 downto 0)
   );
 end design_1_wrapper;
 
 architecture STRUCTURE of design_1_wrapper is
- component design_1 is
+  component design_1 is
   port (
     DDR_cas_n : inout STD_LOGIC;
     DDR_cke : inout STD_LOGIC;
@@ -71,19 +73,21 @@ architecture STRUCTURE of design_1_wrapper is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
-    IIC_0_scl_i : in STD_LOGIC;
-    IIC_0_scl_o : out STD_LOGIC;
-    IIC_0_scl_t : out STD_LOGIC;
     IIC_0_sda_i : in STD_LOGIC;
     IIC_0_sda_o : out STD_LOGIC;
     IIC_0_sda_t : out STD_LOGIC;
+    IIC_0_scl_i : in STD_LOGIC;
+    IIC_0_scl_o : out STD_LOGIC;
+    IIC_0_scl_t : out STD_LOGIC;
+    LEDS_GPIO_tri_o : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    DIPS_GPIO_tri_i : in STD_LOGIC_VECTOR ( 3 downto 0 );
     bclk : out STD_LOGIC;
     clk125 : in STD_LOGIC;
     lrck : out STD_LOGIC;
     mclk : out STD_LOGIC;
     sdata : out STD_LOGIC;
-    leds_gpio_tri_o : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    dips_gpio_tri_i : in STD_LOGIC_VECTOR ( 3 downto 0 )
+    LED0_tri_o : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    LED1_tri_o : out STD_LOGIC_VECTOR ( 2 downto 0 )
   );
   end component design_1;
   component IOBUF is
@@ -149,6 +153,8 @@ design_1_i: component design_1
       mclk => mclk,
       sdata => sdata,
       clk125=>clk125,
+      LED0_tri_o(2 downto 0) => rgbLED0(2 downto 0),
+      LED1_tri_o(2 downto 0) => rgbLED1(2 downto 0),
       dips_gpio_tri_i => sw,
       leds_gpio_tri_o => leds
     );
